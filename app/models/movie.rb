@@ -13,4 +13,28 @@
 #  director_id :integer
 #
 class Movie < ApplicationRecord
+  
+  validates(:director_id, presence: true)
+  validates(:title, uniqueness: true)
+  
+  def director
+    d_id = self.director_id
+
+    matching_directors = Director.where({ :id => d_id})
+
+    the_director = matching_directors.at(0)
+
+    return the_director
+  end
+
+  def character
+    my_id = self.id
+
+    matching_characters = Character.where({ :movie_id => my_id})
+    
+    return matching_characters.at(0)
+  end
+
+
+
 end
